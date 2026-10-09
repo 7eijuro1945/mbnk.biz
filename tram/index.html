@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html lang="uk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta name="theme-color" content="#f2f3f5">
+  <title>Трамвай · квиток</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="css/style.css">
+</head>
+<body data-kind="tram">
+  <main class="app">
+    <div id="ticket-view" class="ticket-view">
+      <header class="topbar">
+        <div class="logo" aria-hidden="true">
+          <img src="assets/logo.svg" alt="">
+        </div>
+        <button class="info-btn" id="info-btn" aria-label="Деталі квитка">i</button>
+      </header>
+
+      <article class="ticket">
+        <div class="ticket-top">
+          <div class="quote">
+            <p class="quote-track" id="quote"></p>
+          </div>
+          <div class="ticket-body">
+            <p class="transport" id="transport">Трамвай</p>
+            <p class="purchased" id="purchased"></p>
+            <h1 class="amount" id="amount">1 квиток</h1>
+            <div class="status" id="status">
+              <span class="status-dot"></span>
+              <span id="status-text">Квиток дійсний — </span>
+              <span id="timer">60:00</span>
+            </div>
+            <p class="vehicle">
+              <span id="transport-label">Трамвай</span>
+              <strong>№</strong>
+              <input class="vehicle-input" id="vehicle-input" inputmode="numeric" maxlength="4" aria-label="Номер трамвая" value="001">
+            </p>
+          </div>
+        </div>
+
+        <div class="perforation" aria-hidden="true">
+          <span class="dash"></span>
+        </div>
+
+        <div class="ticket-bottom">
+          <div class="qr-wrap">
+            <img class="qr" src="assets/qr.png" alt="QR-код квитка" draggable="false">
+          </div>
+          <p class="number" id="number">Номер: <strong>244 197</strong></p>
+        </div>
+        <div class="scallop" aria-hidden="true"></div>
+      </article>
+    </div>
+
+    <section class="details" id="details" hidden>
+      <div class="details-top">
+        <button type="button" class="details-back" id="details-back" aria-label="Назад">
+          <svg viewBox="0 0 24 24" fill="none" aria-hidden="true">
+            <path d="M15 5.5 8.5 12 15 18.5" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"/>
+          </svg>
+        </button>
+        <h1 class="details-title">Деталі квитка</h1>
+      </div>
+
+      <div class="details-card">
+        <div class="details-carrier">
+          <div>
+            <p class="details-label">Ваш перевізник</p>
+            <p class="details-value">КП «ВІННИЦЬКА ТРАНСПОРТНА КОМПАНІЯ»</p>
+          </div>
+          <div class="details-qr-badge" aria-hidden="true">
+            <img src="assets/qr.png" alt="">
+          </div>
+        </div>
+
+        <div class="details-row">
+          <div class="details-field">
+            <p class="details-label">Квиток</p>
+            <p class="details-value">Повний</p>
+          </div>
+          <div class="details-field is-end">
+            <p class="details-label">Вартість</p>
+            <p class="details-value">25 грн</p>
+          </div>
+        </div>
+
+        <div class="details-row is-stack">
+          <div class="details-field">
+            <p class="details-label">Код ЄДРПОУ</p>
+            <p class="details-value">03327925</p>
+          </div>
+          <div class="details-field">
+            <p class="details-label">Основний контакт</p>
+            <p class="details-value">+380674350525</p>
+          </div>
+          <div class="details-field">
+            <p class="details-label">Адреса</p>
+            <p class="details-value is-muted">&nbsp;</p>
+          </div>
+        </div>
+
+        <div class="details-block">
+          <div class="details-field">
+            <p class="details-label">Страховик</p>
+            <p class="details-value">ПАТ «УСК «Княжа Вієнна Іншуранс Груп», вул. Глибочицька 44, м. Київ, 04050, Україна (головний офіс) 0800 50 14 86</p>
+          </div>
+          <div class="details-field">
+            <p class="details-label">Номер договору</p>
+            <p class="details-value">Договір страхування від 12.05.2025 #1749-23/61. Розмір страхової суми 500 000,00.</p>
+          </div>
+        </div>
+      </div>
+
+      <footer class="details-footer">
+        <p class="details-brand">monobank <span>| Universal Bank</span></p>
+        <span class="details-sep" aria-hidden="true"></span>
+        <p class="details-legal">АТ «УНІВЕРСАЛ БАНК» Ліцензія НБУ №92 від 20.01.1994, у держреєстрі банків №226</p>
+      </footer>
+    </section>
+  </main>
+
+  <script src="js/app.js"></script>
+</body>
+</html>

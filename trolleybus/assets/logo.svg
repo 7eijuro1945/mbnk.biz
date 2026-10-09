@@ -1,0 +1,19 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 64 64" fill="none">
+  <defs>
+    <linearGradient id="logo-bg" x1="6" y1="4" x2="58" y2="62" gradientUnits="userSpaceOnUse">
+      <stop offset="0%" stop-color="#FF79C7"/>
+      <stop offset="38%" stop-color="#D14DFF"/>
+      <stop offset="72%" stop-color="#6E74FF"/>
+      <stop offset="100%" stop-color="#4BA4FF"/>
+    </linearGradient>
+    <radialGradient id="logo-shine" cx="28%" cy="22%" r="70%">
+      <stop offset="0%" stop-color="#FFB7E4" stop-opacity="0.55"/>
+      <stop offset="42%" stop-color="#FFB7E4" stop-opacity="0"/>
+    </radialGradient>
+  </defs>
+  <circle cx="32" cy="32" r="32" fill="url(#logo-bg)"/>
+  <circle cx="32" cy="32" r="32" fill="url(#logo-shine)"/>
+  <path fill="#fff" d="M23.2 16.4h6.2c1.2 0 2.1.9 2.1 2.1v5.1h-8.3v-5.1c0-1.2.9-2.1 2-2.1Zm11.4 0h6.2c1.1 0 2 .9 2 2.1v5.1h-8.2v-5.1c0-1.2.9-2.1 2-2.1Z"/>
+  <path fill="#fff" fill-rule="evenodd" d="M18.2 23.2c0-2.6 2.1-4.7 4.7-4.7h18.2c2.6 0 4.7 2.1 4.7 4.7v16.4c0 2.6-2.1 4.7-4.7 4.7H22.9c-2.6 0-4.7-2.1-4.7-4.7V23.2Zm5.6 4.1c0-.9.7-1.6 1.6-1.6h4.4c.9 0 1.6.7 1.6 1.6v6.2c0 .9-.7 1.6-1.6 1.6h-4.4c-.9 0-1.6-.7-1.6-1.6v-6.2Zm9.2 0c0-.9.7-1.6 1.6-1.6h4.4c.9 0 1.6.7 1.6 1.6v6.2c0 .9-.7 1.6-1.6 1.6h-4.4c-.9 0-1.6-.7-1.6-1.6v-6.2Z"/>
+  <rect x="24.4" y="45.2" width="15.2" height="3.6" rx="1.8" fill="#fff"/>
+</svg>

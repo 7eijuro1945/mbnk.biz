@@ -1,38 +1,11 @@
-const KINDS = ["trolleybus", "tram", "bus"];
-
-const PAGES = {
-  trolleybus: "index.html",
-  tram: "tram.html",
-  bus: "bus.html",
-};
-
-const FIELD_IDS = {
-  trolleybus: "trolley-number",
-  tram: "tram-number",
-  bus: "bus-number",
-};
-
-const KEYS = {
-  trolleybus: "vehicle-trolleybus",
-  tram: "vehicle-tram",
-  bus: "vehicle-bus",
-  session: {
-    trolleybus: "ticket-session-trolleybus",
-    tram: "ticket-session-tram",
-    bus: "ticket-session-bus",
-  },
-};
-
 const LABELS = {
   trolleybus: "Тролейбус",
   tram: "Трамвай",
-  bus: "Автобус",
 };
 
 const DEFAULTS = {
   trolleybus: "009",
   tram: "001",
-  bus: "101",
 };
 
 const TICKET = {
@@ -72,13 +45,21 @@ function normalizeVehicle(value, fallback) {
   return digits.padStart(Math.max(3, digits.length), "0");
 }
 
+function vehicleKey(kind) {
+  return `vehicle-${kind}`;
+}
+
+function sessionKey(kind) {
+  return `ticket-session-${kind}`;
+}
+
 function readVehicle(kind) {
-  return normalizeVehicle(localStorage.getItem(KEYS[kind]), DEFAULTS[kind]);
+  return normalizeVehicle(localStorage.getItem(vehicleKey(kind)), DEFAULTS[kind]);
 }
 
 function writeVehicle(kind, value) {
   const next = normalizeVehicle(value, DEFAULTS[kind]);
-  localStorage.setItem(KEYS[kind], next);
+  localStorage.setItem(vehicleKey(kind), next);
   return next;
 }
 
@@ -90,7 +71,7 @@ function randomTicketNumber() {
 
 function readSession(kind) {
   try {
-    const raw = localStorage.getItem(KEYS.session[kind]);
+    const raw = localStorage.getItem(sessionKey(kind));
     if (!raw) return null;
     const data = JSON.parse(raw);
     const purchasedAt = Number(data.purchasedAt);
@@ -106,7 +87,7 @@ function readSession(kind) {
 }
 
 function writeSession(kind, session) {
-  localStorage.setItem(KEYS.session[kind], JSON.stringify(session));
+  localStorage.setItem(sessionKey(kind), JSON.stringify(session));
 }
 
 function createSession() {
@@ -127,7 +108,7 @@ function getSession(kind) {
 }
 
 function init() {
-  const kind = KINDS.includes(document.body.dataset.kind)
+  const kind = LABELS[document.body.dataset.kind]
     ? document.body.dataset.kind
     : "trolleybus";
   const label = LABELS[kind];
@@ -148,10 +129,19 @@ function init() {
   const timer = document.getElementById("timer");
   const status = document.getElementById("status");
   const statusText = document.getElementById("status-text");
+  const ticketView = document.getElementById("ticket-view");
+  const detailsView = document.getElementById("details");
+  const themeMeta = document.querySelector('meta[name="theme-color"]');
+  const vehicleInput = document.getElementById("vehicle-input");
+
+  const setTheme = (color) => {
+    themeMeta?.setAttribute("content", color);
+  };
 
   const renderTicket = () => {
     purchasedEl.textContent = formatPurchased(new Date(session.purchasedAt));
     numberEl.innerHTML = `Номер: <strong>${session.number}</strong>`;
+    vehicleInput.value = readVehicle(kind);
     document.body.classList.remove("is-expired");
     status.classList.remove("is-expired");
   };
@@ -185,39 +175,32 @@ function init() {
     tick();
   };
 
+  const showTicket = () => {
+    detailsView.hidden = true;
+    ticketView.hidden = false;
+    document.body.classList.remove("is-details");
+    setTheme("#f2f3f5");
+  };
+
+  const openDetails = () => {
+    ticketView.hidden = true;
+    detailsView.hidden = false;
+    document.body.classList.add("is-details");
+    setTheme("#000000");
+  };
+
   renderTicket();
   tick();
-
-  const vehicleInput = document.getElementById("vehicle-input");
-  const fields = Object.fromEntries(
-    KINDS.map((k) => [k, document.getElementById(FIELD_IDS[k])])
-  );
-
-  const syncFields = () => {
-    for (const k of KINDS) {
-      fields[k].value = readVehicle(k);
-    }
-    vehicleInput.value = readVehicle(kind);
-  };
-
-  syncFields();
-
-  const applyVehicleChange = (fieldKind, value) => {
-    const prev = readVehicle(fieldKind);
-    const next = writeVehicle(fieldKind, value);
-    syncFields();
-    if (fieldKind === kind && next !== prev) {
-      renewTicket();
-    }
-    return next;
-  };
 
   vehicleInput.addEventListener("input", () => {
     vehicleInput.value = digitsOnly(vehicleInput.value);
   });
 
   vehicleInput.addEventListener("blur", () => {
-    applyVehicleChange(kind, vehicleInput.value);
+    const prev = readVehicle(kind);
+    const next = writeVehicle(kind, vehicleInput.value);
+    vehicleInput.value = next;
+    if (next !== prev) renewTicket();
   });
 
   vehicleInput.addEventListener("keydown", (event) => {
@@ -227,38 +210,8 @@ function init() {
     }
   });
 
-  for (const fieldKind of KINDS) {
-    const field = fields[fieldKind];
-    field.addEventListener("input", () => {
-      field.value = digitsOnly(field.value);
-    });
-    field.addEventListener("blur", () => {
-      applyVehicleChange(fieldKind, field.value);
-    });
-  }
-
-  const overlay = document.getElementById("overlay");
-  document.getElementById("info-btn").addEventListener("click", () => {
-    syncFields();
-    overlay.classList.add("is-open");
-  });
-  document.getElementById("close-info").addEventListener("click", () => {
-    for (const fieldKind of KINDS) {
-      applyVehicleChange(fieldKind, fields[fieldKind].value);
-    }
-    overlay.classList.remove("is-open");
-  });
-  overlay.addEventListener("click", (event) => {
-    if (event.target === overlay) overlay.classList.remove("is-open");
-  });
-
-  const otherTickets = document.getElementById("other-tickets");
-  otherTickets.innerHTML = KINDS.filter((k) => k !== kind)
-    .map(
-      (k) =>
-        `<a class="sheet-link" href="${PAGES[k]}">Квиток: ${LABELS[k]}</a>`
-    )
-    .join("");
+  document.getElementById("info-btn").addEventListener("click", openDetails);
+  document.getElementById("details-back").addEventListener("click", showTicket);
 }
 
 init();
