@@ -10,9 +10,29 @@
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@500;600;700&display=swap" rel="stylesheet">
   <style>
     :root {
+      color-scheme: light dark;
       --bg: #f2f3f5;
       --ink: #1a1a1a;
       --muted: #6b6b6b;
+      --card: #ffffff;
+      --primary: #111;
+      --primary-ink: #fff;
+      --secondary: #fff;
+      --secondary-ink: #111;
+      --secondary-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+    }
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --bg: #0b0b0c;
+        --ink: #f5f5f7;
+        --muted: #8e8e93;
+        --card: #1c1c1e;
+        --primary: #f5f5f7;
+        --primary-ink: #111;
+        --secondary: #1c1c1e;
+        --secondary-ink: #f5f5f7;
+        --secondary-shadow: 0 8px 24px rgba(0, 0, 0, 0.35);
+      }
     }
     * { box-sizing: border-box; margin: 0; padding: 0; }
     body {
@@ -48,15 +68,15 @@
       place-items: center;
       height: 52px;
       border-radius: 14px;
-      background: #111;
-      color: #fff;
+      background: var(--primary);
+      color: var(--primary-ink);
       text-decoration: none;
       font: 600 16px Inter, sans-serif;
     }
     a.secondary {
-      background: #fff;
-      color: #111;
-      box-shadow: 0 8px 24px rgba(15, 23, 42, 0.08);
+      background: var(--secondary);
+      color: var(--secondary-ink);
+      box-shadow: var(--secondary-shadow);
     }
   </style>
 </head>

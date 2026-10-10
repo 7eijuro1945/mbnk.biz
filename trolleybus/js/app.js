@@ -179,15 +179,24 @@ function init() {
     detailsView.hidden = true;
     ticketView.hidden = false;
     document.body.classList.remove("is-details");
-    setTheme("#f2f3f5");
+    syncThemeColor();
   };
 
   const openDetails = () => {
     ticketView.hidden = true;
     detailsView.hidden = false;
     document.body.classList.add("is-details");
-    setTheme("#000000");
+    syncThemeColor();
   };
+
+  const syncThemeColor = () => {
+    const styles = getComputedStyle(document.documentElement);
+    const color = styles.getPropertyValue("--theme-color").trim() || "#f2f3f5";
+    setTheme(color);
+  };
+
+  syncThemeColor();
+  window.matchMedia("(prefers-color-scheme: dark)").addEventListener("change", syncThemeColor);
 
   renderTicket();
   tick();
