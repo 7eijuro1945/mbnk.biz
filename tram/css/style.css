@@ -99,6 +99,7 @@ body {
   width: 100%;
   height: 100%;
   display: block;
+  object-fit: cover;
 }
 
 .info-btn {
@@ -147,7 +148,7 @@ body {
   align-items: center;
   gap: 16px;
   padding-left: 16px;
-  animation: quote-scroll 22s linear infinite;
+  animation: quote-scroll 14s linear infinite;
 }
 
 .quote-sep {
