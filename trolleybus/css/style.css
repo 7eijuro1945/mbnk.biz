@@ -148,7 +148,7 @@ body {
   align-items: center;
   gap: 16px;
   padding-left: 16px;
-  animation: quote-scroll 14s linear infinite;
+  animation: quote-scroll 10s linear infinite;
 }
 
 .quote-sep {
