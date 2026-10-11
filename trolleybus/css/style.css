@@ -47,7 +47,7 @@
     --dash: rgba(255, 255, 255, 0.22);
     --shadow: none;
     --ticket-shadow: none;
-    --qr-shadow: none;
+    --qr-shadow: 0 12px 32px rgba(0, 0, 0, 0.35);
     --app-shadow: 0 20px 50px rgba(0, 0, 0, 0.45);
     --theme-color: #0b0b0c;
   }
@@ -303,7 +303,6 @@ body.is-expired .qr {
   border-radius: 22px;
   background: #fff;
   box-shadow: var(--qr-shadow);
-  overflow: hidden;
 }
 
 .qr {
@@ -312,27 +311,6 @@ body.is-expired .qr {
   object-fit: contain;
   display: block;
   image-rendering: auto;
-}
-
-@media (prefers-color-scheme: dark) {
-  .qr-wrap {
-    background: var(--card);
-    box-shadow: none;
-  }
-
-  .qr {
-    filter: invert(1);
-    mix-blend-mode: screen;
-  }
-
-  body.is-expired .qr {
-    filter: invert(1) grayscale(1);
-  }
-
-  .details-qr-badge img {
-    background: transparent;
-    filter: invert(1);
-  }
 }
 
 .number {
